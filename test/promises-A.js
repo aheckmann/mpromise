@@ -12,7 +12,7 @@ var aplus = require('promises-aplus-tests');
 var adapter = {};
 adapter.fulfilled = function (value) {
   var p = new Promise;
-  p.complete(value);
+  p.fulfill(value);
   return p;
 };
 adapter.rejected = function (reason) {
@@ -24,7 +24,7 @@ adapter.pending = function () {
   var p = new Promise;
   return {
       promise: p
-    , fulfill: p.complete.bind(p)
+    , fulfill: p.fulfill.bind(p)
     , reject: p.reject.bind(p)
   }
 }
