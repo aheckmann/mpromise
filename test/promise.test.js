@@ -158,4 +158,23 @@ describe('promise', function(){
       })
     })
   })
+
+  describe('then catching', function(){
+    it('should not catch returned promise fulfillments', function(done){
+      var p1 = new Promise;
+
+      var p2 = p1.then(function () { return 'step 1' })
+
+      p2.onFulfill(function () { throw new Error('fulfill threw me') })
+      p2.reject = assert.ifError.bind(assert, new Error('reject should not have been called'));
+
+      setTimeout(function () {
+        assert.throws(function () {
+          p1.fulfill();
+        }, /fulfill threw me/)
+        done();
+      }, 10);
+
+    })
+  })
 })
