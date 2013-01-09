@@ -176,5 +176,26 @@ describe('promise', function(){
       }, 10);
 
     })
+
+    it('can be disabled using .end()', function(done){
+      var p = new Promise;
+
+      var p2 = p.then(function () { throw new Error('shucks') })
+      p2.end();
+
+      setTimeout(function () {
+        try {
+          p.fulfill();
+        } catch (err) {
+          assert.ok(/shucks/.test(err))
+          done();
+        }
+
+        setTimeout(function () {
+          done(new Error('error was swallowed'));
+        }, 10);
+
+      }, 10);
+    })
   })
 })
