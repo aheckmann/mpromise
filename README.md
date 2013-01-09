@@ -161,6 +161,28 @@ p.then(function (arg) {
 p.complete(1);
 ```
 
+####end
+
+Signifies that this promise was the last in a chain of `then()s`: if a handler passed to the call to `then` which produced this promise throws, the exception will go uncaught.
+
+```js
+var p = new Promise;
+p.then(function(){ throw new Error('shucks') });
+setTimeout(function () {
+  p.fulfill();
+  // error was caught and swallowed by the promise returned from
+  // p.then(). we either have to always register handlers on
+  // the returned promises or we can do the following...
+}, 10);
+
+// this time we use .end() which prevents catching thrown errors
+var p = new Promise;
+var p2 = p.then(function(){ throw new Error('shucks') }).end(); // <--
+setTimeout(function () {
+  p.fulfill(); // throws "shucks"
+}, 10);
+```
+
 ###Event names
 
 If you'd like to alter this implementations event names used to signify success and failure you may do so by setting `Promise.SUCCESS` or `Promise.FAILURE` respectively.
