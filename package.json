@@ -1,6 +1,6 @@
 {
   "name": "mpromise",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Promises A+ conformant implementation",
   "main": "index.js",
   "scripts": {
