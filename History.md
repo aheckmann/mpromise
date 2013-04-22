@@ -1,4 +1,11 @@
 
+0.2.2 / 2013-04-22
+==================
+
+  * fixed; then() is passed all fulfilled values
+  * use setImmediate if available
+  * use strict
+
 0.2.1 / 2013-02-09
 ==================
 
