@@ -158,7 +158,7 @@ p.then(function (arg) {
   assert.ok(err instanceof Error);
   assert.equal('2 is an error', err.message);
 });
-p.complete(1);
+p.fullfill(1);
 ```
 
 ####end
