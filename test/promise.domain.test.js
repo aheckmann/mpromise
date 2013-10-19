@@ -2,6 +2,10 @@ var Promise = require('../')
   , Domain = require('domain')
   , assert = require('assert');
 
+var next = 'function' == typeof setImmediate
+  ? setImmediate
+  : process.nextTick;
+
 describe("domains", function () {
   it("exceptions should not breakout of domain bounderies", function (done) {
     var d = Domain.create();
@@ -20,7 +24,7 @@ describe("domains", function () {
         }).end();
     });
 
-    setImmediate(function () {
+    next(function () {
       p.fulfill();
     })
   });
