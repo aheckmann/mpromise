@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "mocha": "1.7.4",
-    "promises-aplus-tests": ">= 1.2"
+    "promises-aplus-tests": "1.2.x"
   },
   "repository": {
     "type": "git",
