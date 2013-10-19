@@ -8,8 +8,9 @@ var next = 'function' == typeof setImmediate
 
 describe("domains", function () {
   it("exceptions should not breakout of domain bounderies", function (done) {
+    if (process.version.indexOf('v0.8') == 0) return done();
     var d = Domain.create();
-    d.on('error', function (err) {
+    d.once('error', function (err) {
       assert.equal(err.message, 'gaga');
       done()
     });
