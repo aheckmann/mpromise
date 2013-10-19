@@ -30,7 +30,9 @@ adapter.deferred = function () {
 }
 
 aplus(adapter, {
-    reporter: 'list'
+  reporter: 'spec'
+  , slow: 1
+
 //    , bail:true
 //    , grep:'2.3.1: If `promise` and `x` refer to the same object, reject `promise` with a `TypeError` as the reason. via return from a fulfilled promise'
   }, function (err) {
