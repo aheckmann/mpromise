@@ -184,11 +184,12 @@ describe('promise', function(){
 
 
       it('can be disabled using .end()', function(done){
+        if (process.version.indexOf('v0.8') == 0) return done();
         var errorSentinal
           , overTimeout
           , domain = require('domain').create();
 
-        domain.on('error', function (err) {
+        domain.once('error', function (err) {
           assert(err, errorSentinal);
           clearTimeout(overTimeout);
           done()
@@ -196,7 +197,9 @@ describe('promise', function(){
 
         domain.run(function () {
           var p = new Promise;
-          var p2 = p.then(function () { throw new Error('shucks') })
+          var p2 = p.then(function () {
+            throw errorSentinal = new Error('shucks')
+          });
           p2.end();
 
           p.fulfill();
@@ -206,6 +209,7 @@ describe('promise', function(){
 
 
       it('can be disabled using .end() even when async', function (done) {
+        if (process.version.indexOf('v0.8') == 0) return done();
         var errorSentinal
           , overTimeout
           , domain = require('domain').create();
