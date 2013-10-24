@@ -6,12 +6,10 @@
   "scripts": {
     "test": "make test"
   },
-  "dependencies": {
-    "sliced": "0.0.5"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "mocha": "1.7.4",
-    "promises-aplus-tests": "1.2.x"
+    "mocha": "1.13.0",
+    "promises-aplus-tests": ">= 2.0.0"
   },
   "repository": {
     "type": "git",

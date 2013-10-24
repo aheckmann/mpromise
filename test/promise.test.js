@@ -162,43 +162,77 @@ describe('promise', function(){
   describe('then', function(){
     describe('catching', function(){
       it('should not catch returned promise fulfillments', function(done){
-        var p1 = new Promise;
+        var errorSentinal
+          , p = new Promise
+          , p2 = p.then(function () { throw errorSentinal = new Error("boo!") });
 
-        var p2 = p1.then(function () { return 'step 1' })
+        p.fulfill();
+        done();
+      });
 
-        p2.onFulfill(function () { throw new Error('fulfill threw me') })
-        p2.reject = assert.ifError.bind(assert, new Error('reject should not have been called'));
+
+      it('should not catch returned promise fulfillments even async', function (done) {
+        var errorSentinal
+          , p = new Promise
+          , p2 = p.then(function () { throw errorSentinal = new Error("boo!") });
 
         setTimeout(function () {
-          assert.throws(function () {
-            p1.fulfill();
-          }, /fulfill threw me/)
+          p.fulfill();
           done();
         }, 10);
+      });
 
-      })
 
       it('can be disabled using .end()', function(done){
-        var p = new Promise;
+        if (process.version.indexOf('v0.8') == 0) return done();
+        var errorSentinal
+          , overTimeout
+          , domain = require('domain').create();
 
-        var p2 = p.then(function () { throw new Error('shucks') })
-        p2.end();
+        domain.once('error', function (err) {
+          assert(err, errorSentinal);
+          clearTimeout(overTimeout);
+          done()
+        });
 
-        setTimeout(function () {
-          try {
-            p.fulfill();
-          } catch (err) {
-            assert.ok(/shucks/.test(err))
-            done();
-          }
+        domain.run(function () {
+          var p = new Promise;
+          var p2 = p.then(function () {
+            throw errorSentinal = new Error('shucks')
+          });
+          p2.end();
 
-          setTimeout(function () {
-            done(new Error('error was swallowed'));
-          }, 10);
+          p.fulfill();
+        });
+        overTimeout = setTimeout(function () { done(new Error('error was swallowed')); }, 10);
+      });
 
-        }, 10);
-      })
-    });
+
+      it('can be disabled using .end() even when async', function (done) {
+        if (process.version.indexOf('v0.8') == 0) return done();
+        var errorSentinal
+          , overTimeout
+          , domain = require('domain').create();
+
+        domain.on('error', function (err) {
+          assert(err, errorSentinal);
+          clearTimeout(overTimeout);
+          done()
+        });
+
+        domain.run(function () {
+          var p = new Promise;
+          var p2 = p.then(function () {
+            throw errorSentinal = new Error("boo!")
+          });
+          p2.end();
+
+          setTimeout(function () {p.fulfill();}, 10);
+        });
+        overTimeout = setTimeout(function () { done(new Error('error was swallowed')); }, 20);
+      });
+
+    })
 
     it('accepts multiple completion values', function(done){
       var p = new Promise;

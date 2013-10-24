@@ -20,16 +20,22 @@ adapter.rejected = function (reason) {
   p.reject(reason);
   return p;
 }
-adapter.pending = function () {
+adapter.deferred = function () {
   var p = new Promise;
   return {
       promise: p
-    , fulfill: p.fulfill.bind(p)
     , reject: p.reject.bind(p)
+    , resolve: p.fulfill.bind(p)
   }
 }
 
-aplus(adapter, function (err) {
+aplus(adapter, {
+  reporter: 'spec'
+  , slow: 1
+
+//    , bail:true
+//    , grep:'2.3.1: If `promise` and `x` refer to the same object, reject `promise` with a `TypeError` as the reason. via return from a fulfilled promise'
+  }, function (err) {
   assert.ifError(err);
 });
 
