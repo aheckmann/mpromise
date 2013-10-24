@@ -1,4 +1,11 @@
 
+0.4.0 / 2013-10-24
+==================
+
+ * fixed; now plays nice with domains #3 [refack](https://github.com/refack)
+ * updated; compatibility for Promises A+ 2.0.0 [refack](https://github.com/refack)
+ * updated; guard against invalid arguments [refack](https://github.com/refack)
+
 0.3.0 / 2013-07-25
 ==================
 
