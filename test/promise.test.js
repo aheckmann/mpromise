@@ -1,9 +1,10 @@
 /*global describe,it */
+require("longjohn");
 /**
  * Module dependencies.
  */
 
-var assert = require('assert')
+var assert = require('assert');
 var Promise = require('../lib/promise');
 
 /**
