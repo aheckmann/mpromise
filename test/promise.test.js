@@ -232,6 +232,28 @@ describe('promise', function(){
         overTimeout = setTimeout(function () { done(new Error('error was swallowed')); }, 20);
       });
 
+
+      it('can be handled using .end() so no throwing', function (done) {
+        var errorSentinal
+          , overTimeout
+          , domain = require('domain').create();
+
+        domain.run(function () {
+          var p = new Promise;
+          var p2 = p.then(function () {
+            throw errorSentinal = new Error("boo!")
+          });
+          p2.end(function (err) {
+            assert.equal(err, errorSentinal);
+            clearTimeout(overTimeout);
+            done()
+          });
+
+          setTimeout(function () {p.fulfill();}, 10);
+        });
+        overTimeout = setTimeout(function () { done(new Error('error was swallowed')); }, 20);
+      });
+
     })
 
     it('accepts multiple completion values', function(done){
