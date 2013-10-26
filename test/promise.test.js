@@ -315,4 +315,41 @@ describe('promise', function(){
       p1.resolve(null, varSentinel);
     })
   });
+
+
+  describe("all", function () {
+    it("works", function (done) {
+      var count = 0;
+      var p = new Promise;
+      var p2 = p.all(function () {
+        return [
+          (function () {var p = new Promise(); count++ ;p.resolve(); return p;})()
+          , (function () {var p = new Promise(); count++ ;p.resolve(); return p;})()
+        ];
+      });
+      p2.then(function () {
+        assert.equal(count, 2);
+        done();
+      });
+      p.resolve();
+    });
+
+
+    it.only("handles rejects", function (done) {
+      var count = 0;
+      var p = new Promise;
+      var p2 = p.all(function () {
+        return [
+          (function () {var p = new Promise(); count++; p.resolve(); return p;})(),
+          , (function () {var p = new Promise(); count++; throw new Error("gaga");})()
+        ];
+      });
+      p2.onReject(function (err) {
+        assert(err.message, "gaga");
+        assert.equal(count, 2);
+        done();
+      });
+      p.resolve();
+    });
+  });
 });
