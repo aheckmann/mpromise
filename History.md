@@ -1,3 +1,10 @@
+0.4.1 / 2013-10-26
+==================
+
+ * Add `all`
+ * Longjohn for easier debugging
+ * can end a promise chain with an error handler
+ * Add ```chain```
 
 0.4.0 / 2013-10-24
 ==================
