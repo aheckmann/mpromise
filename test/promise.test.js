@@ -1,5 +1,5 @@
 /*global describe,it */
-require("longjohn");
+if (process.version.indexOf('v0.11') == -1) require("longjohn");
 /**
  * Module dependencies.
  */
@@ -335,7 +335,7 @@ describe('promise', function(){
     });
 
 
-    it.only("handles rejects", function (done) {
+    it("handles rejects", function (done) {
       var count = 0;
       var p = new Promise;
       var p2 = p.all(function () {
