@@ -1,6 +1,8 @@
 #mpromise
 ==========
 
+[![Build Status](https://travis-ci.org/aheckmann/mpromise.png)](https://travis-ci.org/aheckmann/mpromise)
+
 A [promises/A+](https://github.com/promises-aplus/promises-spec) conformant implementation, written for [mongoose](http://mongoosejs.com).
 
 ## installation
