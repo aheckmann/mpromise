@@ -255,7 +255,7 @@ describe('promise', function(){
         overTimeout = setTimeout(function () { done(new Error('error was swallowed')); }, 20);
       });
 
-    })
+    });
 
     it('accepts multiple completion values', function(done){
       var p = new Promise;
@@ -270,6 +270,16 @@ describe('promise', function(){
       p.fulfill('hi', 4);
     })
   });
+
+
+  describe('end', function () {
+    it("should return the promise", function () {
+      var p = new Promise;
+      var p1 = p.end();
+      assert.equal(p, p1);
+    });
+  });
+
 
   describe('chain', function () {
     it('should propagate fulfillment', function (done) {
@@ -340,7 +350,7 @@ describe('promise', function(){
       var p = new Promise;
       var p2 = p.all(function () {
         return [
-          (function () {var p = new Promise(); count++; p.resolve(); return p;})(),
+          (function () {var p = new Promise(); count++; p.resolve(); return p;})()
           , (function () {var p = new Promise(); count++; throw new Error("gaga");})()
         ];
       });
