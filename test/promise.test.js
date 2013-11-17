@@ -5,7 +5,7 @@ if (process.version.indexOf('v0.11') == -1) require("longjohn");
  */
 
 var assert = require('assert');
-var Promise = require('../lib/promise');
+var Promise = require('../');
 
 /**
  * Test.
@@ -360,6 +360,85 @@ describe('promise', function(){
         done();
       });
       p.resolve();
+    });
+  });
+
+
+  describe("deferred", function () {
+    it("works", function (done) {
+      var d = Promise.deferred();
+      assert.ok(d.promise instanceof Promise);
+      assert.ok(d.reject instanceof Function);
+      assert.ok(d.fulfill instanceof Function);
+      assert.ok(d.callback instanceof Function);
+      done();
+    });
+  });
+
+
+  describe("hook", function () {
+    it("works", function (done) {
+      var run = 0;
+      var l1 = function (ser, par) {
+        run++;
+        ser();
+        par();
+      };
+      Promise.hook([l1, l1, l1]).then(function () {
+        assert(run, 3);
+        done();
+      })
+
+    });
+
+
+    it("works with async serial hooks", function (done) {
+      this.timeout(800);
+      var run = 0;
+      var l1 = function (ser, par) {
+        run++;
+        setTimeout(function () {ser();}, 200);
+        par();
+      };
+      Promise.hook([l1, l1, l1]).then(function () {
+        assert(run, 3);
+        done();
+      })
+    });
+
+
+    it("works with async parallel hooks", function (done) {
+      this.timeout(400);
+      var run = 0;
+      var l1 = function (ser, par) {
+        run++;
+        ser();
+        setTimeout(function () {par();}, 200);
+      };
+      Promise.hook([l1, l1, l1]).then(function () {
+        assert(run, 3);
+        done();
+      })
+    });
+
+
+    it("catches errors in hook logic", function (done) {
+      var run = 0;
+      var l1 = function (ser, par) {
+        run++;
+        ser();
+        par();
+      };
+      var l2 = function (ser, par) {
+        run++;
+        ser();
+        par();
+        throw new Error("err")
+      };
+      Promise.hook([l1, l2, l1]).end(function (err) {
+        assert(run, 2);
+        done();
+      });
     });
   });
 });
