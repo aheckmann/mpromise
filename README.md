@@ -165,7 +165,9 @@ p.fullfill(1);
 
 ####end
 
-Signifies that this promise was the last in a chain of `then()s`: if a handler passed to the call to `then` which produced this promise throws, the exception will go uncaught.
+Signifies that this promise was the last in a chain of `then()s`: if a handler passed to the call to `then` which produced this promise throws, the exception be rethrown.
+You can pass an OnReject handler to `end` so that exceptions will be handled (like a final catch clause);
+This method returns it's promise for easy use with `return`.
 
 ```js
 var p = new Promise;
@@ -179,10 +181,30 @@ setTimeout(function () {
 
 // this time we use .end() which prevents catching thrown errors
 var p = new Promise;
-var p2 = p.then(function(){ throw new Error('shucks') }).end(); // <--
 setTimeout(function () {
   p.fulfill(); // throws "shucks"
 }, 10);
+return p.then(function(){ throw new Error('shucks') }).end(); // <--
+```
+
+
+### chain
+
+Allows direct promise to promise chaining (especially useful by a outside aggregating function). It doesn't use the asynchronous `resolve` algorithm and so excepts only another Promise as it's argument.
+
+```js
+function makeMeAPromise(i) {
+  var p = new Promise;
+  p.fulfill(i);
+  return p;
+}
+
+var returnPromise = initialPromise = new Promise;
+for (i=0; i<10; ++i)
+    returnPromise = returnPromise.chain(makeMeAPromise(i));
+
+initialPromise.fulfill();
+return returnPromise;
 ```
 
 ###Event names
