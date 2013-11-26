@@ -4,9 +4,13 @@
   "description": "Promises A+ conformant implementation",
   "main": "index.js",
   "scripts": {
-    "test": "make test"
+    "test": "node node_modules/mocha/bin/_mocha"
   },
-  "dependencies": {},
+  "dependencies": {
+    "longjohn": "~0.2.1",
+    "promises-aplus-tests": "~2.0.2",
+    "mocha": "~1.13.0"
+  },
   "devDependencies": {
     "mocha": "1.13.0",
     "promises-aplus-tests": ">= 2.0.0",
