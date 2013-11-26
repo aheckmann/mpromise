@@ -273,10 +273,11 @@ describe('promise', function(){
 
 
   describe('end', function () {
-    it("should return the promise", function () {
+    it("should return the promise", function (done) {
       var p = new Promise;
       var p1 = p.end();
       assert.equal(p, p1);
+      done();
     });
   });
 
