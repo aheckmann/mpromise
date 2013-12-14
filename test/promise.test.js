@@ -257,6 +257,31 @@ describe('promise', function(){
 
     });
 
+    it('persistent', function(done){
+      var p = new Promise
+          v = null;
+
+      function ensure (val) {
+        v = v || val;
+        assert.equal(v, val);
+      }
+
+      function guard () {
+        throw new Error('onReject should not be called');
+      }
+
+      p.then(ensure, guard).end();
+
+      p.fulfill('foo');
+      p.fulfill('bar');
+      p.reject(new Error('baz'));
+
+      p.then(ensure, guard).end();
+
+      setTimeout(done, 0);
+    })
+
+
     it('accepts multiple completion values', function(done){
       var p = new Promise;
 
