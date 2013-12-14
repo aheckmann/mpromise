@@ -1,3 +1,16 @@
+
+0.5.0 / 2013-12-14
+==================
+
+ * fixed; non-A+ behavior on fulfill and reject [lbeschastny](https://github.com/lbeschastny)
+ * tests; simplified harness + compatible with travis + compatible with windows
+
+0.4.2 / 2013-11-26
+==================
+
+ * fixed; enter the domain only if not the present domain
+ * added; `end` returns the promise
+
 0.4.1 / 2013-10-26
 ==================
 
