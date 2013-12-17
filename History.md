@@ -1,5 +1,5 @@
 
-0.5.0 / 2013-12-14
+0.4.3 / 2013-12-17
 ==================
 
  * fixed; non-A+ behavior on fulfill and reject [lbeschastny](https://github.com/lbeschastny)
