@@ -279,7 +279,7 @@ describe('promise', function(){
       p.then(ensure, guard).end();
 
       setTimeout(done, 0);
-    })
+    });
 
 
     it('accepts multiple completion values', function(done){
@@ -303,6 +303,30 @@ describe('promise', function(){
       var p1 = p.end();
       assert.equal(p, p1);
       done();
+    });
+
+
+    it("should throw for chain", function (done) {
+      var p = new Promise;
+      p.then().then().then().then().end();
+      try {
+        p.reject('bad');
+      } catch (e) {
+        done();
+      }
+    });
+
+
+    it("should not throw for chain with reject handler", function (done) {
+      var p = new Promise;
+      p.then().then().then().then().end(function () {
+        done();
+      });
+      try {
+        p.reject('bad');
+      } catch (e) {
+        done(e);
+      }
     });
   });
 
