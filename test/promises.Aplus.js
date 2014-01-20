@@ -28,7 +28,7 @@ adapter.deferred = function () {
 it("run A+ suite", function (done) {
   this.timeout(60000);
   aplus(adapter, {
-    reporter: 'spec', slow: 1
+    reporter: 'dot', slow: 1
 
 //    , bail:true
 //    , grep:'2.3.1: If `promise` and `x` refer to the same object, reject `promise` with a `TypeError` as the reason. via return from a fulfilled promise'
