@@ -1,3 +1,7 @@
+0.4.4 / 2014-01-20
+==================
+
+ * fixed; `end` is much more consistent (especially for `then` chains)
 
 0.4.3 / 2013-12-17
 ==================
