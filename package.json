@@ -1,10 +1,13 @@
 {
   "name": "mpromise",
   "version": "0.5.1",
+  "publishConfig": {
+    "tag": "beta"
+  },
   "description": "Promises A+ conformant implementation",
-  "main": "index.js",
+  "main": "lib/promise.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/_mocha"
+    "test": "mocha"
   },
   "devDependencies": {
     "longjohn": "0.2.2",
