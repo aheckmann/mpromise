@@ -419,7 +419,7 @@ describe('promise', function(){
       var d = Promise.deferred();
       assert.ok(d.promise instanceof Promise);
       assert.ok(d.reject instanceof Function);
-      assert.ok(d.fulfill instanceof Function);
+      assert.ok(d.resolve instanceof Function);
       assert.ok(d.callback instanceof Function);
       done();
     });
