@@ -210,7 +210,7 @@ describe('promise', function(){
 
 
       it('can be disabled using .end() even when async', function (done) {
-        if (process.version.indexOf('v0.8') == 0) return done();
+        if (process.version.indexOf('v0.10') != 0) return done();
         var errorSentinal
           , overTimeout
           , domain = require('domain').create();

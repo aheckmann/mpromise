@@ -5,7 +5,7 @@ var Promise = require('../')
 
 describe("domains", function () {
   it("exceptions should not breakout of domain boundaries", function (done) {
-    if (process.version.indexOf('v0.8') == 0) return done();
+    if (process.version.indexOf('v0.10') != 0) return done();
     var d = new Domain;
     d.on('error', function (err) {
       assert.equal(err.message, 'gaga');
