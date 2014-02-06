@@ -301,7 +301,7 @@ describe('promise', function () {
       p.onFulfill(function (a, b, c) {
         assert.equal('a', a);
         assert.equal('b', b);
-        assert.equal('b', b);
+        assert.equal('c', c);
         done();
       });
       p.fulfill('a', 'b', 'c');
@@ -318,7 +318,18 @@ describe('promise', function () {
             }
           );
         }
-      ).end().onFulfill(function (a, b, c) {
+      ).onFulfill(
+        function (a, b, c) {
+          assert.equal('a', a);
+          assert.equal('b', b);
+          assert.equal('c', c);
+          done();
+        }
+      ).end()
+    });
+
+    it('should work with `fulfilled` convenience method', function (done) {
+      Promise.fulfilled('a', 'b', 'c').then(function (a, b, c) {
         assert.equal('a', a);
         assert.equal('b', b);
         assert.equal('c', c);
