@@ -1,5 +1,4 @@
 /*global describe,it */
-if (process.version.indexOf('v0.11') == -1) require("longjohn");
 /**
  * Module dependencies.
  */
@@ -11,8 +10,8 @@ var Promise = require('../');
  * Test.
  */
 
-describe('promise', function(){
-  it('events fire right after fulfill()', function(done){
+describe('promise', function () {
+  it('events fire right after fulfill()', function (done) {
     var promise = new Promise()
       , called = 0;
 
@@ -34,7 +33,7 @@ describe('promise', function(){
     done();
   });
 
-  it('events fire right after reject()', function(done){
+  it('events fire right after reject()', function (done) {
     var promise = new Promise()
       , called = 0;
 
@@ -54,14 +53,14 @@ describe('promise', function(){
     done()
   });
 
-  describe('onResolve()', function(){
-    it('from constructor works', function(done){
+  describe('onResolve()', function () {
+    it('from constructor works', function (done) {
       var called = 0;
 
       var promise = new Promise(function (err) {
         assert.ok(err instanceof Error);
         called++;
-      })
+      });
 
       promise.reject(new Error('dawg'));
 
@@ -69,18 +68,18 @@ describe('promise', function(){
       done();
     });
 
-    it('after fulfill()', function(done){
+    it('after fulfill()', function (done) {
       var promise = new Promise()
         , called = 0;
 
       promise.fulfill('woot');
 
-      promise.onResolve(function (err, data){
-        assert.equal(data,'woot');
+      promise.onResolve(function (err, data) {
+        assert.equal(data, 'woot');
         called++;
       });
 
-      promise.onResolve(function (err, data){
+      promise.onResolve(function (err) {
         assert.strictEqual(err, null);
         called++;
       });
@@ -90,8 +89,8 @@ describe('promise', function(){
     })
   });
 
-  describe('onFulfill shortcut', function(){
-    it('works', function(done){
+  describe('onFulfill shortcut', function () {
+    it('works', function (done) {
       var promise = new Promise()
         , called = 0;
 
@@ -104,11 +103,11 @@ describe('promise', function(){
 
       assert.equal(1, called);
       done();
-    })
-  })
+    });
+  });
 
-  describe('onReject shortcut', function(){
-    it('works', function(done){
+  describe('onReject shortcut', function () {
+    it('works', function (done) {
       var promise = new Promise()
         , called = 0;
 
@@ -123,34 +122,34 @@ describe('promise', function(){
     })
   });
 
-  describe('return values', function(){
-    it('on()', function(done){
-      var promise = new Promise()
-      assert.ok(promise.on('jump', function(){}) instanceof Promise);
+  describe('return values', function () {
+    it('on()', function (done) {
+      var promise = new Promise();
+      assert.ok(promise.on('jump', function () {}) instanceof Promise);
       done()
     });
 
-    it('onFulfill()', function(done){
-      var promise = new Promise()
-      assert.ok(promise.onFulfill(function(){}) instanceof Promise);
+    it('onFulfill()', function (done) {
+      var promise = new Promise();
+      assert.ok(promise.onFulfill(function () {}) instanceof Promise);
+      done();
+    });
+    it('onReject()', function (done) {
+      var promise = new Promise();
+      assert.ok(promise.onReject(function () {}) instanceof Promise);
+      done();
+    });
+    it('onResolve()', function (done) {
+      var promise = new Promise();
+      assert.ok(promise.onResolve(function () {}) instanceof Promise);
       done();
     })
-    it('onReject()', function(done){
-      var promise = new Promise()
-      assert.ok(promise.onReject(function(){}) instanceof Promise);
-      done();
-    })
-    it('onResolve()', function(done){
-      var promise = new Promise()
-      assert.ok(promise.onResolve(function(){}) instanceof Promise);
-      done();
-    })
-  })
+  });
 
-  describe('casting errors', function(){
-    describe('reject()', function(){
-      it('does not cast arguments to Error', function(done){
-        var p = new Promise(function (err, arg) {
+  describe('casting errors', function () {
+    describe('reject()', function () {
+      it('does not cast arguments to Error', function (done) {
+        var p = new Promise(function (err) {
           assert.equal(3, err);
           done();
         });
@@ -158,14 +157,14 @@ describe('promise', function(){
         p.reject(3);
       })
     })
-  })
+  });
 
-  describe('then', function(){
-    describe('catching', function(){
-      it('should not catch returned promise fulfillments', function(done){
+  describe('then', function () {
+    describe('catching', function () {
+      it('should not catch returned promise fulfillments', function (done) {
         var errorSentinal
-          , p = new Promise
-          , p2 = p.then(function () { throw errorSentinal = new Error("boo!") });
+          , p = new Promise;
+        p.then(function () { throw errorSentinal = new Error("boo!") });
 
         p.fulfill();
         done();
@@ -174,8 +173,8 @@ describe('promise', function(){
 
       it('should not catch returned promise fulfillments even async', function (done) {
         var errorSentinal
-          , p = new Promise
-          , p2 = p.then(function () { throw errorSentinal = new Error("boo!") });
+          , p = new Promise;
+        p.then(function () { throw errorSentinal = new Error("boo!") });
 
         setTimeout(function () {
           p.fulfill();
@@ -184,7 +183,7 @@ describe('promise', function(){
       });
 
 
-      it('can be disabled using .end()', function(done){
+      it('can be disabled using .end()', function (done) {
         if (process.version.indexOf('v0.8') == 0) return done();
         var errorSentinal
           , overTimeout
@@ -257,16 +256,16 @@ describe('promise', function(){
 
     });
 
-    it('persistent', function(done){
-      var p = new Promise
-          v = null;
+    it('persistent', function (done) {
+      var p = new Promise;
+      v = null;
 
-      function ensure (val) {
+      function ensure(val) {
         v = v || val;
         assert.equal(v, val);
       }
 
-      function guard () {
+      function guard() {
         throw new Error('onReject should not be called');
       }
 
@@ -282,7 +281,7 @@ describe('promise', function(){
     });
 
 
-    it('accepts multiple completion values', function(done){
+    it('accepts multiple completion values', function (done) {
       var p = new Promise;
 
       p.then(function (a, b) {
@@ -294,6 +293,38 @@ describe('promise', function(){
 
       p.fulfill('hi', 4);
     })
+  });
+
+  describe('fulfill values and splats', function () {
+    it('should handle multiple values', function (done) {
+      var p = new Promise;
+      p.onFulfill(function (a, b, c) {
+        assert.equal('a', a);
+        assert.equal('b', b);
+        assert.equal('b', b);
+        done();
+      });
+      p.fulfill('a', 'b', 'c');
+    });
+
+    it('should handle multiple values from a then', function (done) {
+      Promise.fulfilled().then(
+        function () {
+          return Promise.fulfilled().then(
+            function () {
+              var p = new Promise;
+              p.fulfill('a', 'b', 'c');
+              return p;
+            }
+          );
+        }
+      ).end().onFulfill(function (a, b, c) {
+        assert.equal('a', a);
+        assert.equal('b', b);
+        assert.equal('c', c);
+        done();
+      })
+    });
   });
 
 
@@ -333,9 +364,9 @@ describe('promise', function(){
 
   describe('chain', function () {
     it('should propagate fulfillment', function (done) {
-      var varSentinel = {a:'a'};
+      var varSentinel = {a: 'a'};
       var p1 = new Promise;
-      var p2 = p1.chain(new Promise(function (err, doc) {
+      p1.chain(new Promise(function (err, doc) {
         assert.equal(doc, varSentinel);
         done();
       }));
@@ -346,7 +377,7 @@ describe('promise', function(){
     it('should propagate rejection', function (done) {
       var e = new Error("gaga");
       var p1 = new Promise;
-      var p2 = p1.chain(new Promise(function (err) {
+      p1.chain(new Promise(function (err) {
         assert.equal(err, e);
         done();
       }));
@@ -357,7 +388,7 @@ describe('promise', function(){
     it('should propagate resolution err', function (done) {
       var e = new Error("gaga");
       var p1 = new Promise;
-      var p2 = p1.chain(new Promise(function (err) {
+      p1.chain(new Promise(function (err) {
         assert.equal(err, e);
         done();
       }));
@@ -366,9 +397,9 @@ describe('promise', function(){
 
 
     it('should propagate resolution val', function (done) {
-      var varSentinel = {a:'a'};
+      var varSentinel = {a: 'a'};
       var p1 = new Promise;
-      var p2 = p1.chain(new Promise(function (err, val) {
+      p1.chain(new Promise(function (err, val) {
         assert.equal(val, varSentinel);
         done();
       }));
@@ -383,8 +414,18 @@ describe('promise', function(){
       var p = new Promise;
       var p2 = p.all(function () {
         return [
-          (function () {var p = new Promise(); count++ ;p.resolve(); return p;})()
-          , (function () {var p = new Promise(); count++ ;p.resolve(); return p;})()
+          (function () {
+            var p = new Promise();
+            count++;
+            p.resolve();
+            return p;
+          })()
+          , (function () {
+            var p = new Promise();
+            count++;
+            p.resolve();
+            return p;
+          })()
         ];
       });
       p2.then(function () {
@@ -400,8 +441,16 @@ describe('promise', function(){
       var p = new Promise;
       var p2 = p.all(function () {
         return [
-          (function () {var p = new Promise(); count++; p.resolve(); return p;})()
-          , (function () {var p = new Promise(); count++; throw new Error("gaga");})()
+          (function () {
+            var p = new Promise();
+            count++;
+            p.resolve();
+            return p;
+          })()
+          , (function () {
+            count++;
+            throw new Error("gaga");
+          })()
         ];
       });
       p2.onReject(function (err) {

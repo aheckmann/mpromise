@@ -10,9 +10,8 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "longjohn": "0.2.2",
     "promises-aplus-tests": "2.0.3",
-    "mocha": "1.13.0"
+    "mocha": "1.17.1"
   },
   "repository": {
     "type": "git",
