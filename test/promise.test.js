@@ -415,7 +415,20 @@ describe('promise', function () {
         done();
       }));
       p1.resolve(null, varSentinel);
-    })
+    });
+
+
+    it('should propagate multiple resolution vals', function(done) {
+      var val1 = 'eggs';
+      var val2 = 'bacon';
+      var p = new Promise;
+      p.chain(new Promise(function (err, v1, v2) {
+        assert.equal(v1, val1);
+        assert.equal(v2, val2);
+        done();
+      }));
+      p.resolve(null, val1, val2);
+    });
   });
 
 
