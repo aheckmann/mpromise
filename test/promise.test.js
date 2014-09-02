@@ -599,6 +599,9 @@ describe('promise', function () {
       var whenPromise = Promise.when(promise1, promise2);
 
       whenPromise.onResolve(function(error, results1, results2){
+        assert.ok(results1 instanceof Array)
+        assert.ok(results2 instanceof Array)
+
         assert(results1[0], "a");
         assert(results1[1], "b");
         assert(results1[2], "c");
