@@ -499,6 +499,18 @@ describe('promise', function () {
   });
 
 
+  describe("catch()", function() {
+    it("wraps then()", function(done) {
+      var p = new Promise;
+      p.catch(function(err) {
+        assert.ok(err);
+        done();
+      });
+
+      p.reject('oops');
+    });
+  });
+
   describe("hook", function () {
     it("works", function (done) {
       var run = 0;
