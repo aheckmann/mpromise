@@ -158,9 +158,9 @@ p.then(function (arg) {
   throw new Error(arg + ' is an error!');
 }).then(null, function (err) {
   assert.ok(err instanceof Error);
-  assert.equal('2 is an error', err.message);
+  assert.equal('2 is an error!', err.message);
 });
-p.fullfill(1);
+p.fulfill(1);
 ```
 
 ####end
