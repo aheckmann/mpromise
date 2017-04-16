@@ -1,4 +1,4 @@
-#mpromise
+# mpromise
 ==========
 
 [![Build Status](https://travis-ci.org/aheckmann/mpromise.png)](https://travis-ci.org/aheckmann/mpromise)
@@ -38,7 +38,7 @@ promise.onResolve(function (err, args..) {
 
 ### Methods
 
-####fulfill
+#### fulfill
 
 Fulfilling a promise with values:
 
@@ -49,7 +49,7 @@ promise.fulfill(args...);
 
 If the promise has already been fulfilled or rejected, no action is taken.
 
-####reject
+#### reject
 
 Rejecting a promise with a reason:
 
@@ -60,7 +60,7 @@ promise.reject(reason);
 
 If the promise has already been fulfilled or rejected, no action is taken.
 
-####resolve
+#### resolve
 
 Node.js callback style promise resolution `(err, args...)`:
 
@@ -71,7 +71,7 @@ promise.resolve([reason], [arg1, arg2, ...]);
 
 If the promise has already been fulfilled or rejected, no action is taken.
 
-####onFulfill
+#### onFulfill
 
 To register a function for execution when the promise is fulfilled, pass it to `onFulfill`. When executed it will receive the arguments passed to `fulfill()`.
 
@@ -95,7 +95,7 @@ promise.onFulfill(function (arg) {
 })
 ```
 
-####onReject
+#### onReject
 
 To register a function for execution when the promise is rejected, pass it to `onReject`. When executed it will receive the argument passed to `reject()`.
 
@@ -119,7 +119,7 @@ promise.onReject(function (reason) {
 })
 ```
 
-####onResolve
+#### onResolve
 
 Allows registration of node.js style callbacks `(err, args..)` to handle either promise resolution type (fulfill or reject).
 
@@ -141,7 +141,7 @@ promise.onResolve(function (err) {
 promise.reject(new Error('failed'));
 ```
 
-####then
+#### then
 
 Creates a new promise and returns it. If `onFulfill` or `onReject` are passed, they are added as SUCCESS/ERROR callbacks to this promise after the nextTick.
 
@@ -163,7 +163,7 @@ p.then(function (arg) {
 p.fulfill(1);
 ```
 
-####end
+#### end
 
 Signifies that this promise was the last in a chain of `then()s`: if a handler passed to the call to `then` which produced this promise throws, the exception be rethrown.
 You can pass an OnReject handler to `end` so that exceptions will be handled (like a final catch clause);
@@ -207,7 +207,7 @@ initialPromise.fulfill();
 return returnPromise;
 ```
 
-###Event names
+### Event names
 
 If you'd like to alter this implementations event names used to signify success and failure you may do so by setting `Promise.SUCCESS` or `Promise.FAILURE` respectively.
 
@@ -216,7 +216,7 @@ Promise.SUCCESS = 'complete';
 Promise.FAILURE = 'err';
 ```
 
-###Luke, use the Source
+### Luke, use the Source
 For more ideas read the [source](https://github.com/aheckmann/mpromise/blob/master/lib), [tests](https://github.com/aheckmann/mpromise/blob/master/test), or the [mongoose implementation](https://github.com/LearnBoost/mongoose/blob/3.6x/lib/promise.js).
 
 ## license
