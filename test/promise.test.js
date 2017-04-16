@@ -338,6 +338,19 @@ describe('promise', function () {
     });
   });
 
+  describe('catch', function () {
+    describe('onReject', function () {
+      it("should be called when a promise is rejected", function (done) {
+        var p = new Promise;
+        var rejection = 'foo';
+        p.reject(rejection);
+        p.catch(function(reason) {
+          assert.equal(rejection, reason);
+          done();
+        });
+      });
+    });
+  });
 
   describe('end', function () {
     it("should return the promise", function (done) {
