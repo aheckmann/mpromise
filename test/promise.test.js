@@ -564,4 +564,82 @@ describe('promise', function () {
       });
     });
   });
+
+  describe("when", function(){
+    it("should return a promise instance", function (done){
+      var whenPromise = Promise.when()
+      assert.ok(whenPromise instanceof Promise);
+      done();
+    });
+
+    it("should be fulfilled when all the passed in promises are resolved", function (done){
+      var promise1 = new Promise;
+      var promise2 = new Promise;
+      var whenPromise = Promise.when(promise1, promise2)
+
+      whenPromise.onResolve(function(){
+        called = 0;
+        promise1.onFulfill(function(){
+          called++;
+        });
+        promise2.onFulfill(function(){
+          called++;
+        });
+        assert(called, 2);
+        done();
+      });
+      promise1.fulfill();
+      promise2.fulfill();
+
+    });
+
+    it("should pass the fulfilled promise results in order", function (done){
+      var promise1 = new Promise;
+      var promise2 = new Promise;
+      var whenPromise = Promise.when(promise1, promise2);
+
+      whenPromise.onResolve(function(error, results1, results2){
+        assert.ok(results1 instanceof Array)
+        assert.ok(results2 instanceof Array)
+
+        assert(results1[0], "a");
+        assert(results1[1], "b");
+        assert(results1[2], "c");
+
+        assert(results2[0], "d");
+        assert(results2[1], "e");
+        assert(results2[2], "f");
+
+        done();
+      });
+
+      promise1.fulfill("a", "b", "c");
+      promise2.fulfill("d", "e", "f");
+
+    });
+
+    it("should be rejected if one of the passed in promises are rejected", function (done){
+      var promise1 = new Promise;
+      var promise2 = new Promise;
+      var whenPromise = Promise.when(promise1, promise2);
+
+      var onResolvedCalled = false;
+      whenPromise.onResolve(function(){
+        onResolvedCalled = true;
+      });
+
+      whenPromise.onReject(function(error){
+        assert.ok(error instanceof Error);
+        assert(onResolvedCalled, false);
+        done();
+      });
+
+      promise1.fulfill();
+      promise2.reject(new Error("rejected"));
+
+    });
+
+
+  })
+
 });
